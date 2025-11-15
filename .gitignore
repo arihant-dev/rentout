@@ -1,0 +1,54 @@
+.env
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+dist/
+build/
+pip-wheel-metadata/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+
+# ===== IDEs / editors =====
+.vscode/
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# ===== Node / Frontend =====
+node_modules/
+frontend/node_modules/
+dist/
+
+# ===== Logs, testing, coverage =====
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# ===== Credentials / keys (add patterns for any keys you create locally) =====
+*.pem
+*.key
+*.p12
+*.jks
+# Service account keys (example names) - adjust if you keep keys elsewhere
+service-account-*.json
+*-credentials.json
+
+# ===== Database / local files =====
+*.sqlite3
+*.db
+
+# Note: keep sample data (e.g. backend/data/listings.json) tracked by default.
