@@ -4,6 +4,11 @@ import uuid
 import threading
 import asyncio
 from typing import Any, Dict, List, Optional
+import logging
+
+from app.services.n8n_service import send_webhook
+
+logger = logging.getLogger(__name__)
 
 # File-backed listings storage (no DB). Uses atomic replace and a module-level lock
 DATA_FILE = os.path.abspath(
@@ -59,6 +64,20 @@ async def create_listing(payload: Dict[str, Any]) -> Dict[str, Any]:
                 new["price"] = 0.0
         listings.append(new)
         await _write_listings(listings)
+        # Fire-and-forget an n8n webhook for new listings. We schedule this
+        # after the file write so the listing exists even if the webhook fails.
+        async def _fire_webhook(l):
+            try:
+                res = await send_webhook("listing-created", l)
+                logger.info("n8n webhook result: %s", res)
+            except Exception:
+                logger.exception("n8n webhook failed for listing %s", l.get("id"))
+
+        try:
+            asyncio.create_task(_fire_webhook(new))
+        except Exception:
+            logger.exception("Failed to schedule n8n webhook task for listing %s", new.get("id"))
+
         return new
 
 

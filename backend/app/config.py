@@ -21,6 +21,9 @@ class Settings:
     )
     REDIS_URL: str = os.getenv("REDIS_URL", "redis://redis:6379/0")
     N8N_WEBHOOK_URL: str = os.getenv("N8N_WEBHOOK_URL", "http://n8n:5678/webhook")
+    # Optional n8n REST API base URL and API key (if using n8n's REST API)
+    N8N_API_URL: str = os.getenv("N8N_API_URL", "http://n8n:5678")
+    N8N_API_KEY: str = os.getenv("N8N_API_KEY", "")
     GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
     ELEVENLABS_API_KEY: str = os.getenv("ELEVENLABS_API_KEY", "")
     # Allow origins may be provided as a comma-separated env var
